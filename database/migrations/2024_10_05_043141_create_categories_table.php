@@ -9,18 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Primary Key
+            $table->string('name');
+            $table->unsignedBigInteger('parent_category_id')->nullable(); // For hierarchy
             $table->timestamps();
+
+            // Foreign Key
+            $table->foreign('parent_category_id')->references('id')->on('categories');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('categories');
     }

@@ -9,18 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('customer_purchases', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id(); // PK
+            $table->unsignedBigInteger('customer_id'); // FK hacia customers
+            $table->decimal('total_purchase_amount', 10, 2); // Monto total de la compra
+            $table->date('purchase_date'); // Fecha de la compra
+            $table->timestamps(); // created_at y updated_at
+            // Foreign Key
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');    
+            // Index
+            $table->index('customer_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('customer_purchases');
     }

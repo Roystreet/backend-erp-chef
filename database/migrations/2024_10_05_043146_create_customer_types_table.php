@@ -9,19 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('customer_types', function (Blueprint $table) {
-            $table->id();
+        Schema::create('customers', function (Blueprint $table) {
+            $table->id(); // Primary Key
+            $table->string('name');
+            $table->string('dni')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->unsignedBigInteger('customer_type_id'); // FK to customer types
             $table->timestamps();
+            // Foreign Key
+            //$table->foreign('customer_type_id')->references('id')->on('customer_types');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('customer_types');
+        Schema::dropIfExists('customers');
     }
 };

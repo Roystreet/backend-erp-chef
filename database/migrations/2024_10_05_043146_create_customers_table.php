@@ -9,19 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->id();
+        Schema::create('customer_types', function (Blueprint $table) {
+            $table->id(); // Primary Key
+            $table->string('name'); // Customer type (Frecuente, Corporativo, Mayorista)
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('customer_types');
     }
 };

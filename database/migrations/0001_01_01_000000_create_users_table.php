@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('role');
             // Relación con franquicias
             $table->unsignedBigInteger('franchise_id')->nullable(); // FK a franquicias, opcional
-            $table->foreign('franchise_id')->references('id')->on('franchises')->onDelete('set null'); // Foreign key
+            //$table->foreign('franchise_id')->references('id')->on('franchises')->onDelete('set null'); // Foreign key
 
             $table->timestamps();
         });

@@ -9,19 +9,26 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('price_histories', function (Blueprint $table) {
-            $table->id();
+        Schema::create('price_history', function (Blueprint $table) {
+            $table->id(); // Primary Key
+            $table->unsignedBigInteger('article_id');
+            $table->decimal('old_price', 10, 2);
+            $table->decimal('new_price', 10, 2);
+            $table->unsignedBigInteger('changed_by'); // FK to users or admin who changed the price
+            $table->timestamp('changed_at');
             $table->timestamps();
+            // Foreign Key
+            $table->foreign('article_id')->references('id')->on('articles');
+            $table->foreign('changed_by')->references('id')->on('users');
+            // Indexes
+            $table->index('article_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('price_histories');
+        Schema::dropIfExists('price_history');
     }
 };
